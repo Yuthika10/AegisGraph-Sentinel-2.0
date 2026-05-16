@@ -499,7 +499,11 @@ async def startup_event():
             print(f"⚠ Mule scorer initialization failed: {e}")
         
         try:
-            state.honeypot_manager = HoneypotEscrowManager()
+            honeypot_cfg = state.config.get('advanced_features', {}).get('honeypot_escrow', {})
+            escrow_seconds = honeypot_cfg.get('escrow_duration_seconds', 7200)
+            state.honeypot_manager = HoneypotEscrowManager(
+                auto_release_hours=escrow_seconds / 3600
+            )
             print("✓ Honeypot Escrow Manager initialized")
         except Exception as e:
             print(f"⚠ Honeypot manager initialization failed: {e}")
