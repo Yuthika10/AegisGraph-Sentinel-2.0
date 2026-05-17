@@ -1,6 +1,7 @@
 """
 Pydantic schemas for API request/response validation
 """
+# Schema validation for all fraud detection endpoints
 
 from pydantic import BaseModel, Field, field_validator
 from typing import Optional, List, Dict
@@ -12,7 +13,7 @@ class BiometricsData(BaseModel):
     hold_times: List[float] = Field(description="Key hold times in milliseconds")
     flight_times: List[float] = Field(description="Key flight times in milliseconds")
     
-    @field_validator('hold_times', 'flight_times')
+    @field_validator('hold_times', 'flight_times') #ready
     @classmethod
     def validate_positive(cls, v):
         if any(x < 0 for x in v):
@@ -80,6 +81,7 @@ class TransactionCheckResponse(BaseModel):
     honeypot_id: Optional[str] = Field(default=None, description="Honeypot trap ID if activated")
     blockchain_evidence_id: Optional[str] = Field(default=None, description="Blockchain evidence ID (Innovation 6)")
     behavioral_stress_detected: bool = Field(default=False, description="Keystroke stress detected (Innovation 1)")
+    lateral_movement_detected: bool = Field(default=False, description="Lateral movement pattern detected (MITRE ATT&CK TA0008)")
     
     class Config:
         json_schema_extra = {
@@ -101,7 +103,8 @@ class TransactionCheckResponse(BaseModel):
                 "honeypot_activated": True,
                 "honeypot_id": "HP_ABC123",
                 "blockchain_evidence_id": "EVID_XYZ789",
-                "behavioral_stress_detected": True
+                "behavioral_stress_detected": True,
+                "lateral_movement_detected": False
             }
         }
 

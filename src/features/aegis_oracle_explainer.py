@@ -9,6 +9,8 @@ Generates human-readable explanations for every fraud decision:
 
 The Oracle pattern: Combine model reasoning with LLM narrative generation.
 """
+# Working on explainable AI for regulatory compliance
+"""
 
 import json
 from typing import Dict, List, Optional, Tuple

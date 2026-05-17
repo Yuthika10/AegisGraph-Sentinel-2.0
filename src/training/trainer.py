@@ -1,6 +1,7 @@
 """
 Training Pipeline for HTGNN Fraud Detection Model
 """
+# Working on model training pipeline improvements
 
 import torch
 import torch.nn as nn
