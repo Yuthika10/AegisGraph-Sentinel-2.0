@@ -56,6 +56,7 @@ except Exception as e:
     print(f"⚠️  Warning loading model components ({e}) - demo stub will be used but system stays in PRODUCTION MODE")
     MODEL_AVAILABLE = False   # accurately reflect that the real model is unavailable
 
+
     # define fallback scorer that properly uses amount for velocity calculation
     def compute_risk_score(transaction: dict, biometrics: dict = None, **kwargs) -> dict:
         breakdown = {'graph': 0.0, 'velocity': 0.0, 'behavior': 0.0, 'entropy': 0.0}
