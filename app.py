@@ -1285,6 +1285,28 @@ elif page == "🎯 Innovations":
 # Page: About
 elif page == "ℹ️ About System":
     st.header("ℹ️ About AegisGraph Sentinel 2.0")
+    # Insert latest PR summary for quick review
+    with st.expander("Latest PR: feat: implement production-ready HTGNN with temporal graphs (#21)"):
+        st.markdown('''
+        **Title:** feat: implement production-ready HTGNN with temporal graphs
+
+        **Summary:** Implements production-ready HTGNN pipeline: training, inference, pattern detection, and deployment artifacts. Includes production trainer, realtime scorer, and fraud pattern detector. Adds example pipeline and docs; updates Streamlit app API port to 8080.
+
+        **Highlights:**
+        - Real HTGNN Model with Temporal Graphs (HTGAT)
+        - Production training pipeline (early stopping, checkpointing, focal loss)
+        - Real-time inference scorer with explainability
+        - Mule ring, fan-in, fan-out and velocity anomaly detection
+        - FastAPI backend and Streamlit dashboard integration
+
+        **Verify locally:**
+        ```bash
+        python examples/complete_pipeline.py
+        python -m pytest tests/ -v
+        ```
+
+        **PR:** https://github.com/Puneet04-tech/AegisGraph-Sentinel-2.0/pull/21
+        ''')
     
     st.markdown("""
     ### 🛡️ Real-Time Cross-Channel Mule Account Detection
