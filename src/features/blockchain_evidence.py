@@ -108,12 +108,13 @@ class BlockchainNode:
     
     def _create_genesis_block(self):
         """Create the first block in the chain"""
+        creation_time = datetime.now().isoformat()
         genesis = {
             'block_number': 0,
-            'timestamp': datetime.now().isoformat(),
+            'timestamp': creation_time,
             'transactions': [],
             'previous_hash': '0' * 64,
-            'hash': self._compute_hash('genesis', '0' * 64, []),
+            'hash': self._compute_hash('genesis', '0' * 64, [], creation_time),
             'validator': self.node_id,
         }
         self.chain.append(genesis)
@@ -123,15 +124,24 @@ class BlockchainNode:
         block_data: str,
         previous_hash: str,
         transactions: List,
+        timestamp: str,
     ) -> str:
-        """Compute cryptographic hash of block"""
+        """Compute deterministic cryptographic hash of block.
+
+        Args:
+            block_data: Block identifier string.
+            previous_hash: Hash of the previous block.
+            transactions: List of transactions in the block.
+            timestamp: The block's creation timestamp (must be the same
+                value stored in the block so the hash is reproducible).
+        """
         data = {
             'block_data': block_data,
             'previous_hash': previous_hash,
             'transactions': transactions,
-            'timestamp': time.time(),
+            'timestamp': timestamp,
         }
-        return hashlib.sha256(json.dumps(data, sort_keys=True).encode()).hexdigest()
+        return hashlib.sha256(json.dumps(data, sort_keys=True, default=str).encode()).hexdigest()
     
     def add_transaction(self, transaction: Dict) -> str:
         """Add transaction to pending pool"""
@@ -147,10 +157,11 @@ class BlockchainNode:
             return None
         
         previous_block = self.chain[-1]
+        creation_time = datetime.now().isoformat()
         
         block = {
             'block_number': len(self.chain),
-            'timestamp': datetime.now().isoformat(),
+            'timestamp': creation_time,
             'transactions': self.pending_transactions[:100],  # Batch up to 100
             'previous_hash': previous_block['hash'],
             'validator': self.node_id,
@@ -160,6 +171,7 @@ class BlockchainNode:
             f"block_{block['block_number']}",
             block['previous_hash'],
             block['transactions'],
+            creation_time,
         )
         
         # Clear processed transactions
