@@ -837,6 +837,12 @@ async def check_transaction(request: TransactionCheckRequest):
             'BLOCK': 'block',
         }
         decision = decision_map.get(internal_decision, internal_decision.lower())
+        raw_decision = risk_result['decision']
+        decision = {
+            'ALLOW': 'approve',
+            'REVIEW': 'review',
+            'BLOCK': 'block',
+        }.get(raw_decision, str(raw_decision).lower())
         response = TransactionCheckResponse(
             transaction_id=request.transaction_id,
             risk_score=risk_result['risk_score'],
