@@ -1,9 +1,13 @@
 # Core ML/DL Frameworks
 torch>=2.0.0
 torch-geometric>=2.3.0
-torch-scatter>=2.1.0
-torch-sparse>=0.6.16
-torch-cluster>=1.6.0
+# Commented out compile-from-source extensions to allow smooth installation on Mac ARM64
+# torch-scatter>=2.1.0
+# torch-sparse>=0.6.16
+# torch-cluster>=1.6.0
+
+# UI and Frontend
+streamlit>=1.20.0
 
 # Graph Processing
 networkx>=3.0
