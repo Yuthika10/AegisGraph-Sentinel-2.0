@@ -1499,9 +1499,9 @@ def score_account_opening(request: AccountOpeningRequest):
     summary="Assess account mule risk",
     description="Innovation 3: Alias for mule assessment endpoint"
 )
-async def assess_mule_risk(request: AccountOpeningRequest):
+def assess_mule_risk(request: AccountOpeningRequest):
     """Alias endpoint for mule assessment"""
-    return await score_account_opening(request)
+    return score_account_opening(request)
 
 
 @app.get(
