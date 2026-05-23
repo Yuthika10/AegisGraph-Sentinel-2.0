@@ -1,6 +1,7 @@
-import numpy as np
+from collections import defaultdict, deque
+
 import networkx as nx
-from collections import deque, defaultdict
+import numpy as np
 
 
 class LateralMovementDetector:
@@ -65,7 +66,7 @@ class LateralMovementDetector:
         baseline_mean = np.mean(history)
         baseline_std = np.std(history)
 
-        # Trigger 1: Current score is above standard deviation threshold
+        # Trigger 1: Current score is above standard dev threshold
         threshold = baseline_mean + (self.std_multiplier * baseline_std)
         std_trigger = current_score > threshold
 
@@ -85,7 +86,6 @@ class LateralMovementDetector:
 
 
 if __name__ == "__main__":
-    # Quick Local Test
     detector = LateralMovementDetector()
     print("Initializing Lateral Movement Engine...")
 
@@ -101,4 +101,4 @@ if __name__ == "__main__":
     )
     risk, flagged = detector.analyze_account("ACC_001")
 
-    print(f"Risk Penalty Added: {risk} | Flagged as Mule/Pivot: {flagged}")
+    print(f"Risk Added: {risk} | Mule: {flagged}")
